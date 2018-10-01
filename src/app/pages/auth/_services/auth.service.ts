@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 // App imports
 import { environment } from './../../../environments/environment';
-import { User } from './user';
+import { User } from '../user';
 
 // Setup headers
 const httpOptions = {

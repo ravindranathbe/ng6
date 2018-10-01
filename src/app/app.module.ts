@@ -11,6 +11,7 @@ import { BikesModule } from './pages/bikes/bikes.module';
 import { BuildersModule } from './pages/builders/builders.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { NavComponent } from './layout/nav/nav.component';
+import { HttpErrorHandler } from './shared/_services/http-handle-error.service';
 
 @NgModule({
   declarations: [
