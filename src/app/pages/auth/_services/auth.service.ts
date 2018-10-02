@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 // App imports
-import { environment } from './../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { User } from '../user';
 
 // Setup headers

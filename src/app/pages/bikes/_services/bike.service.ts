@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 // App import
 import { environment } from '../../../../environments/environment';
 import { Bike } from '../bike';
-import { HttpHandleError, HandleError } from '../../pages/shared/_services/http-handle-error.service';
+import { HttpHandleError, HandleError } from '../../../pages/shared/_services/http-handle-error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -46,9 +46,9 @@ export class BikeService {
     }
 
     /** DELETE bike bike endpoint */
-    deleteBike (id: number): Observable<Bike[]> {
-        return this.http.delete<Bike[]>(this.bikesUrl + `/${id}`)
-            .pipe(catchError(this.handleError('deleteBike')));
+    deleteBike (id: number): any { // Observable<Bike[]>
+        // return this.http.delete<Bike[]>(this.bikesUrl + `/${id}`)
+           // .pipe(catchError(this.handleError('deleteBike')));
     }
     
     /** Vote on bike */

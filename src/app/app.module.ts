@@ -13,6 +13,7 @@ import { AuthModule } from './pages/auth/auth.module';
 import { NavComponent } from './layout/nav/nav.component';
 import { HttpHandleError } from './pages/shared/_services/http-handle-error.service';
 import { AppHttpInterceptorService } from './pages/shared/_services/http-interceptor.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,13 +27,14 @@ import { AppHttpInterceptorService } from './pages/shared/_services/http-interce
     BikesModule,
     BuildersModule,
     AuthModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgbModule.forRoot()
   ],
-  providers: [Title, HttpHandleError, {
-	provide: HTTP_INTERCEPTORS,
-	useClass: AppHttpInterceptorService ,
-	multi: true
-}],
+  providers: [Title, HttpHandleError], /*, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AppHttpInterceptorService ,
+    multi: true
+  } */
   bootstrap: [AppComponent]
 })
 export class AppModule { }

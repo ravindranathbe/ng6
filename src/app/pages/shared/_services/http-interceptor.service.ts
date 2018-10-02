@@ -10,6 +10,7 @@ import { AuthService } from '../../../pages/auth/_services/auth.service';
 
 export class AppHttpInterceptorService implements HttpInterceptor {
 	constructor(public auth: AuthService, private router: Router ) { }
+
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		console.log('interceptor running');
 

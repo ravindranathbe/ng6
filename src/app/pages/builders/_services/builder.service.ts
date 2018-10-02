@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 // App import
 import { environment } from '../../../../environments/environment';
 import { Builder } from '../builder';
-import { HttpHandleError, HandleError } from '../../pages/shared/_services/http-handle-error.service';
+import { HttpHandleError, HandleError } from '../../../pages/shared/_services/http-handle-error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class BuilderService {
     getBuilders (): Observable<Builder[]> {
         return this.http.get<Builder[]>
             (this.buildersUrl)
-                .pipe(catchError(error => this.handleError('getBuilders', [])));
+                .pipe(catchError(this.handleError('getBuilders', [])));
     }
 
     /** GET builder detail from builder-detail endpoint*/
@@ -47,9 +47,9 @@ export class BuilderService {
 	}
 
     /** DELETE builder builder endpoint */
-    deleteBuilder (id: number): Observable<Builder[]> {
-        return this.http.delete<Builder[]>(this.buildersUrl + `/${id}`)
-            .pipe(catchError(this.handleError('deleteBuilder')));
+    deleteBuilder (id: number): any { // Observable<Builder[]>
+        // return this.http.delete<Builder[]>(this.buildersUrl + `/${id}`)
+           // .pipe(catchError(this.handleError('deleteBuilder')));
     }
 
     /** Error handler */
