@@ -119,7 +119,7 @@ export class AuthService {
         }
         
         // return a custom error message
-        return throwError('Ohps something wrong happen here; please try again later.');
+        return throwError('Oops something wrong happen here; please try again later.');
     }
     
 }

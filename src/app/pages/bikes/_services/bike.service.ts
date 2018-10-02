@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
 // App import
 import { environment } from '../../../../environments/environment';
 import { Bike } from '../bike';
+import { HttpHandleError, HandleError } from '../../pages/shared/_services/http-handle-error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,60 +15,51 @@ import { Bike } from '../bike';
 export class BikeService {
     private readonly apiUrl = environment.apiUrl;
     private bikesUrl = this.apiUrl + '/bikes';
+	private handleError: HandleError;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, httpErrorHandler: HttpHandleError) {
+		this.handleError = httpErrorHandler.createHandleError('BikesService');
+	}
     
     /** GET bikes from bikes endpoint */
     getBikes (): Observable<Bike[]> {
         return this.http.get<Bike[]>(this.bikesUrl)
-            .pipe(
-                catchError(error => this.handleError(error))
-            );
+            .pipe(catchError(this.handleError('getBikes', [])));
     }
 
     /** GET bike detail from bike-detail endpoint */
     getBikeDetail (id: number): Observable<Bike[]> {
         return this.http.get<Bike[]>(this.bikesUrl + `/${id}`)
-            .pipe(
-                catchError(error => this.handleError(error))
-            );
+            .pipe(catchError(this.handleError('getBikeDetail', [])));
     }
 
     /** POST bike to bikes endpoint */
     addBike (bike: Bike): Observable<Bike> {
         return this.http.post<Bike>(this.bikesUrl, bike)
-            .pipe(
-                catchError(error => this.handleError(error))
-            );
+            .pipe(catchError(this.handleError('addBike', bike)));
     }
 
     /** PUT bike to bikes endpoint */
     updateBike (bike: Bike, id: number): Observable<Bike> {
         return this.http.put<Bike>(this.bikesUrl + `/${id}`, bike)
-            .pipe(
-                catchError(error => this.handleError(error))
-            );
+            .pipe(catchError(this.handleError('updateBike', bike)));
     }
 
     /** DELETE bike bike endpoint */
     deleteBike (id: number): Observable<Bike[]> {
         return this.http.delete<Bike[]>(this.bikesUrl + `/${id}`)
-            .pipe(
-                catchError(error => this.handleError(error))
-            );
+            .pipe(catchError(this.handleError('deleteBike')));
     }
     
     /** Vote on bike */
     voteOnBike (vote: any, bike: number): Observable<any> {
         const rating = vote;
         return this.http.post(this.bikesUrl + `/${bike}/ratings`, {rating})
-            .pipe(
-                catchError(error => this.handleError(error))
-            );
+            .pipe(catchError(this.handleError('voteOnBike', [])));
     }
     
     /** Error handler */
-    private handleError(error: HttpErrorResponse) {
+    /* private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
             // A client-side error.
             console.error('An error occurred:', error.error.message);
@@ -78,6 +70,6 @@ export class BikeService {
 
         // return a custom error message
         return throwError('Something bad happened; please try again later.');
-    }
+    } */
     
 }

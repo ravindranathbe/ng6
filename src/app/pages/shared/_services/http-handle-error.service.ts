@@ -7,7 +7,7 @@ export type HandleError = <T> (operation?: string, result?: T) => (error: HttpEr
 @Injectable({
   providedIn: 'root'
 })
-export class HttpHandleErrorService {
+export class HttpHandleError {
 
     constructor() { }
   

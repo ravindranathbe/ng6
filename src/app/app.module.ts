@@ -11,7 +11,8 @@ import { BikesModule } from './pages/bikes/bikes.module';
 import { BuildersModule } from './pages/builders/builders.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { NavComponent } from './layout/nav/nav.component';
-import { HttpErrorHandler } from './shared/_services/http-handle-error.service';
+import { HttpHandleError } from './pages/shared/_services/http-handle-error.service';
+import { AppHttpInterceptorService } from './pages/shared/_services/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,11 @@ import { HttpErrorHandler } from './shared/_services/http-handle-error.service';
     AuthModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [Title],
+  providers: [Title, HttpHandleError, {
+	provide: HTTP_INTERCEPTORS,
+	useClass: AppHttpInterceptorService ,
+	multi: true
+}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
