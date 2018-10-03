@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+// App imports
+import { Builder } from './../builder';
+import { BuildersService } from '../_services/builders.service';
 
 @Component({
   selector: 'app-builder-detail',
@@ -7,9 +12,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BuilderDetailComponent implements OnInit {
 
-  constructor() { }
+  builder: Builder;
+  isLoading: Boolean = false;
+
+  constructor(
+    private buildersService: BuildersService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // Get builder detail
+    this.getBuilderDetail();
+  }
+
+  getBuilderDetail(): void {
+    this.isLoading = true;
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.buildersService.getBuilderDetail(id)
+      .subscribe(builder => {
+        this.isLoading = false;
+        this.builder = builder['data'];
+      });
   }
 
 }
